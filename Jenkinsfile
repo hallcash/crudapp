@@ -35,6 +35,8 @@ pipeline {
 
         stage('Deploy to Swarm') {
             steps {
+                sh 'sed -i "s|hallcash/crudback:.*|hallcash/crudback:${BUILD_NUMBER}|g" docker-compose.yaml'
+                sh 'sed -i "s|hallcash/mysql:.*|hallcash/mysql:${BUILD_NUMBER}|g" docker-compose.yaml'
                 sh 'docker stack deploy -c docker-compose.yaml app'
             }
         }
